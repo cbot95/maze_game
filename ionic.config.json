@@ -1,0 +1,7 @@
+{
+  "name": "maze_game",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
