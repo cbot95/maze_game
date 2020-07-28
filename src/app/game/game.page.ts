@@ -20,8 +20,8 @@ export class GamePage implements OnInit {
   playerBombs = 0;
   enemiesLeft = 4;
 
-  bombA = 1;
-  bombB = 2;
+  arrowA = 1;
+  arrowB = 2;
   coinB = 50;
   coinC = 100;
   coinD = 50;
@@ -30,7 +30,7 @@ export class GamePage implements OnInit {
   trollB = false;
   trollC = false;
 
- 
+
   ngOnInit() {
    this.currRoom = (this.roomList[Math.floor(Math.random() * this.roomList.length)]);
    this.roomNav();
@@ -62,9 +62,14 @@ export class GamePage implements OnInit {
         console.log('You cannot go here');
         break;
       case 'Room B':
-        console.log('you have moved to room A');
-        this.currRoom = 'Room A';
-        this.roomB = false;
+        if (!this.trollA)  {
+          console.log('A troll blocks the other side');
+          this.playerScore = this.playerScore - 10;
+        } else {
+          console.log('you have moved to room A');
+          this.currRoom = 'Room A';
+          this.roomB = false;
+        }
         break;
       case 'Room C':
         console.log('you have moved to room D');
@@ -88,9 +93,17 @@ export class GamePage implements OnInit {
         console.log('you have moved to room D');
         break;
       case 'Room B':
-        console.log('you have moved to room C');
-        this.currRoom = 'Room C';
-        this.roomB = false;
+        if (!this.trollB) {
+          console.log(' a troll blocks this passage');
+          this.playerScore = this.playerScore - 10;
+        } else if (!this.trollC) {
+          console.log('A troll is in the other room');
+          this.playerScore = this.playerScore - 10;
+        } else {
+          console.log('you have moved to room C');
+          this.currRoom = 'Room C';
+          this.roomB = false;
+        }
         break;
       case 'Room C':
         console.log('You cannot go here');
@@ -101,23 +114,32 @@ export class GamePage implements OnInit {
         this.roomD = false;
     }
     this.roomNav();
-    console.log(this.currRoom);
   }
 
   eastPsg() {
     switch (this.currRoom) {
       case 'Room A':
-        this.currRoom = 'Room B';
-        this.roomA = false;
-        console.log('you have moved to room B');
+        if (!this.trollA) {
+          console.log('A troll is blocking this passage');
+          this.playerScore = this.playerScore - 10;
+        } else {
+          this.currRoom = 'Room B';
+          this.roomA = false;
+          console.log('you have moved to room B');
+        }
         break;
       case 'Room B':
         console.log('You cannot go this way');
         break;
       case 'Room C':
-        this.currRoom = 'Room B';
-        this.roomC = false;
-        console.log('you have moved to room B');
+        if (!this.trollC) {
+          console.log('A troll is blocking this passage');
+          this.playerScore = this.playerScore - 10;
+        } else {
+          this.currRoom = 'Room B';
+          this.roomC = false;
+          console.log('you have moved to room B');
+        }
         break;
       case 'Room D':
         console.log('you have moved to room B');
@@ -185,32 +207,33 @@ export class GamePage implements OnInit {
   collectBomb(){
     switch (this.currRoom) {
       case 'Room A':
-        if (this.bombA === 0){
+        if (this.arrowA === 0){
           console.log('All bombs collected');
         } else {
-          this.playerBombs = this.playerBombs + this.bombA;
-          this.bombA = 0;
+          this.playerBombs = this.playerBombs + this.arrowA;
+          this.arrowA = 0;
         }
         break;
       case 'Room B':
-        if (this.coinB === 0){
-          console.log('There are no bombs');
+        if (this.arrowB === 0){
+          console.log('There are no arrows');
         } else {
           this.playerBombs = this.playerBombs + 1;
-          this.bombB = this.bombB - 1;
+          this.arrowB = this.arrowB - 1;
         }
         break;
       case 'Room C':
+        console.log('There are no bombs here');
         break;
-        case 'Room D':
-        console.log('There are no bombs');
+      case 'Room D':
+        console.log('There are no bombs here');
     }
   }
 // defeat enemy
 
   attack() {
     if (this.playerBombs < 1 ){
-      console.log('You have no bombs')
+      console.log('You have no bombs');
     } else {
       switch (this.currRoom) {
         case 'Room A':
