@@ -19,6 +19,7 @@ export class GamePage implements OnInit {
 
   ngOnInit() {
    this.currRoom = (this.roomList[Math.floor(Math.random() * this.roomList.length)]);
+   console.log(this.currRoom);
    this.roomNav();
   }
 
@@ -45,20 +46,95 @@ export class GamePage implements OnInit {
   northPsg() {
     switch (this.currRoom) {
       case 'Room A':
-        console.log('You cannot go this way');
+        console.log('You cannot go here');
         break;
       case 'Room B':
-        this.roomA = true;
+        console.log('you have moved to room A');
+        this.currRoom = 'Room A';
+        this.roomB = false;
         break;
       case 'Room C':
-        this.roomC = true;
+        console.log('you have moved to room D');
+        this.currRoom = 'Room D';
+        this.roomC = false;
         break;
       case 'Room D':
-        this.roomD = true;
-        break;
+        console.log('you have moved to room A');
+        this.currRoom = 'Room A';
+        this.roomD = false;
     }
-
+    this.roomNav();
+    console.log(this.currRoom);
   }
+
+  southPsg() {
+    switch (this.currRoom) {
+      case 'Room A':
+        this.currRoom = 'Room D';
+        this.roomA = false;
+        console.log('you have moved to room D');
+        break;
+      case 'Room B':
+        console.log('you have moved to room C');
+        this.currRoom = 'Room C';
+        this.roomB = false;
+        break;
+      case 'Room C':
+        console.log('You cannot go here');
+        break;
+      case 'Room D':
+        console.log('you have moved to room C');
+        this.currRoom = 'Room C';
+        this.roomD = false;
+    }
+    this.roomNav();
+    console.log(this.currRoom);
+  }
+
+  eastPsg() {
+    switch (this.currRoom) {
+      case 'Room A':
+        this.currRoom = 'Room B';
+        this.roomA = false;
+        console.log('you have moved to room B');
+        break;
+      case 'Room B':
+        console.log('You cannot go this way');
+        break;
+      case 'Room C':
+        this.currRoom = 'Room B';
+        this.roomC = false;
+        console.log('you have moved to room B');
+        break;
+      case 'Room D':
+        console.log('you have moved to room B');
+        this.currRoom = 'Room B';
+        this.roomD = false;
+    }
+    this.roomNav();
+    console.log(this.currRoom);
+  }
+
+  westPsg() {
+    switch (this.currRoom) {
+      case 'Room A':
+        console.log('You cannot go here');
+        break;
+      case 'Room B':
+        console.log('you have moved to room D');
+        this.currRoom = 'Room D';
+        this.roomB = false;
+        break;
+      case 'Room C':
+        console.log('You cannot go here');
+        break;
+      case 'Room D':
+        console.log('the exit');
+    }
+    this.roomNav();
+    console.log(this.currRoom);
+  }
+
 
 
 }
