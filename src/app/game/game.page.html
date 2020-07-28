@@ -1,11 +1,15 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>game</ion-title>
+    <ion-text>Enemies: {{enemiesLeft}} </ion-text>
+    <ion-text> Score: {{playerScore}}</ion-text>
+    <ion-text> Bombs: {{playerBombs}}</ion-text>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-
+  <ion-row>
+  </ion-row>
   <ion-row>
     <ion-item *ngIf="roomA"><ion-label>Room A</ion-label></ion-item>
     <ion-item *ngIf="roomB"><ion-label>Room B</ion-label></ion-item>
@@ -17,6 +21,12 @@
     <ion-button (click)="southPsg()">South Passage</ion-button>
     <ion-button (click)="westPsg()">West Passage</ion-button>
     <ion-button (click)="eastPsg()">East Passage</ion-button>
-
+  </ion-row>
+  <ion-row>
+    <ion-button (click)="collectCoin()">Collect Coin</ion-button>
+    <ion-button (click)="collectBomb()">Collect bomb</ion-button>
+  </ion-row>
+  <ion-row>
+    <ion-button (click)="attack()">Attack</ion-button>
   </ion-row>
 </ion-content>

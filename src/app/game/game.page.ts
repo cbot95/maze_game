@@ -16,10 +16,23 @@ export class GamePage implements OnInit {
   roomC = false;
   roomD = false;
 
+  playerScore = 0;
+  playerBombs = 0;
+  enemiesLeft = 4;
 
+  bombA = 1;
+  bombB = 2;
+  coinB = 50;
+  coinC = 100;
+  coinD = 50;
+
+  trollA = false;
+  trollB = false;
+  trollC = false;
+
+ 
   ngOnInit() {
    this.currRoom = (this.roomList[Math.floor(Math.random() * this.roomList.length)]);
-   console.log(this.currRoom);
    this.roomNav();
   }
 
@@ -135,7 +148,104 @@ export class GamePage implements OnInit {
     console.log(this.currRoom);
   }
 
+  // collect items
 
+  collectCoin(){
+    switch (this.currRoom) {
+      case 'Room A':
+        console.log('There are no coins');
+        break;
+      case 'Room B':
+        if (this.coinB === 0){
+          console.log('There are no coins');
+        } else {
+          this.playerScore = this.playerScore + this.coinB;
+          this.coinB = 0;
+        }
+        break;
+      case 'Room C':
+        if (this.coinC === 0){
+          console.log('There are no coins');
+        } else {
+          this.playerScore = this.playerScore + this.coinC;
+          this.coinC = 0;
+        }
+        break;
+      case 'Room D':
+        if (this.coinD === 0){
+          console.log('There are no coins');
+        } else {
+          this.playerScore = this.playerScore + this.coinD;
+          this.coinD = 0;
+        }
+    }
+    console.log(this.playerScore);
+  }
+
+  collectBomb(){
+    switch (this.currRoom) {
+      case 'Room A':
+        if (this.bombA === 0){
+          console.log('All bombs collected');
+        } else {
+          this.playerBombs = this.playerBombs + this.bombA;
+          this.bombA = 0;
+        }
+        break;
+      case 'Room B':
+        if (this.coinB === 0){
+          console.log('There are no bombs');
+        } else {
+          this.playerBombs = this.playerBombs + 1;
+          this.bombB = this.bombB - 1;
+        }
+        break;
+      case 'Room C':
+        break;
+        case 'Room D':
+        console.log('There are no bombs');
+    }
+  }
+// defeat enemy
+
+  attack() {
+    if (this.playerBombs < 1 ){
+      console.log('You have no bombs')
+    } else {
+      switch (this.currRoom) {
+        case 'Room A':
+          if (this.trollA){
+            console.log('No trolls in this room');
+          } else {
+            this.playerBombs = this.playerBombs - 1;
+            this.enemiesLeft = this.enemiesLeft - 1;
+            this.trollA = true;
+          }
+          break;
+        case 'Room B':
+          if (this.trollB){
+            console.log('There are no trolls in this room');
+          } else {
+            this.playerBombs = this.playerBombs - 1;
+            this.enemiesLeft = this.enemiesLeft - 1;
+            this.trollB = true;
+          }
+          break;
+        case 'Room C':
+          if (this.trollC){
+            console.log('There are no trolls in this room');
+          } else {
+            this.playerBombs = this.playerBombs - 1;
+            this.enemiesLeft = this.enemiesLeft - 1;
+            this.trollC = true;
+          }
+          break;
+          case 'Room D':
+          console.log('There are no trolls');
+      }
+    }
+
+  }
 
 }
 
