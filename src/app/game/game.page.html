@@ -3,28 +3,89 @@
     <ion-title>game</ion-title>
     <ion-text>Enemies: {{enemiesLeft}} </ion-text>
     <ion-text> Score: {{playerScore}}</ion-text>
-    <ion-text> Bombs: {{playerBombs}}</ion-text>
+    <ion-text> Bombs: {{playerArrows}}</ion-text>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <ion-row>
+
+  <ion-row class="ion-justify-content-center">
+    <ion-col size="12" size-lg="6">
+
+      <ion-card *ngIf="roomA">
+        <ion-card-header>
+          <ion-title>Room A</ion-title>
+        </ion-card-header>
+        <ion-card-content>
+          <ion-text>
+            <p *ngIf="!trollA">There is a troll in this room!</p>
+            <p *ngIf="arrowA > 0">There is {{arrowA}} arrow in this room</p>
+            <p *ngIf="trollA && !arrowA">This room is empty, keep going!</p>
+            <p *ngIf="!enemiesLeft">Find the Exit!</p>
+          </ion-text>
+        </ion-card-content>
+      </ion-card>
+
+      <ion-card *ngIf="roomB">
+        <ion-card-header>
+          <ion-title>Room B</ion-title>
+        </ion-card-header>
+        <ion-card-content>
+          <ion-text>
+            <p *ngIf="!trollA">There is a troll in this room!</p>
+            <p *ngIf="arrowB > 0">There is {{arrowB}} arrow in this room</p>
+            <p *ngIf="coinB">There is a silver coin</p>
+            <p *ngIf="trollB && !arrowB && !coinB">This room is empty, keep going!</p>
+            <p *ngIf="!enemiesLeft">Find the Exit!</p>
+          </ion-text>
+        </ion-card-content>
+      </ion-card>
+
+      <ion-card *ngIf="roomC">
+        <ion-card-header>
+          <ion-title>Room C</ion-title>
+        </ion-card-header>
+        <ion-card-content>
+          <ion-text>
+            <ion-text>
+              <p *ngIf="!trollC">There is a troll in this room!</p>
+              <p *ngIf="coinC">There is a Gold coin</p>
+              <p *ngIf="trollB && !arrowB && !coinB">This room is empty, keep going!</p>
+              <p *ngIf="!enemiesLeft">Find the Exit!</p>
+            </ion-text>
+          </ion-text>
+        </ion-card-content>
+      </ion-card>
+
+      <ion-card *ngIf="roomD">
+        <ion-card-header>
+          <ion-title>Room D</ion-title>
+        </ion-card-header>
+        <ion-card-content>
+          <ion-text>
+            <p *ngIf="!trollC">There is a troll in this room!</p>
+            <p *ngIf="coinD">There is a Silver coin</p>
+            <p *ngIf="trollB && !arrowB && !coinB">This room is empty, keep going!</p>
+            <p *ngIf="!enemiesLeft">Find the Exit!</p>
+          </ion-text>
+        </ion-card-content>
+      </ion-card>
+
+    </ion-col>
   </ion-row>
-  <ion-row>
-    <ion-item *ngIf="roomA"><ion-label>Room A</ion-label></ion-item>
-    <ion-item *ngIf="roomB"><ion-label>Room B</ion-label></ion-item>
-    <ion-item *ngIf="roomC"><ion-label>Room C</ion-label></ion-item>
-    <ion-item *ngIf="roomD"><ion-label>Room D</ion-label></ion-item>
+
+  <ion-row class="ion-justify-content-center">
+    <ion-col size="12" size-lg="6">
+      <ion-button (click)="northPsg()">North</ion-button>
+      <ion-button (click)="southPsg()">South</ion-button>
+      <ion-button (click)="westPsg()">West</ion-button>
+      <ion-button (click)="eastPsg()">East</ion-button>
+    </ion-col>
   </ion-row>
-  <ion-row>
-    <ion-button (click)="northPsg()">North Passage</ion-button>
-    <ion-button (click)="southPsg()">South Passage</ion-button>
-    <ion-button (click)="westPsg()">West Passage</ion-button>
-    <ion-button (click)="eastPsg()">East Passage</ion-button>
-  </ion-row>
+
   <ion-row>
     <ion-button (click)="collectCoin()">Collect Coin</ion-button>
-    <ion-button (click)="collectBomb()">Collect bomb</ion-button>
+    <ion-button (click)="collectBomb()">Collect Arrow</ion-button>
   </ion-row>
   <ion-row>
     <ion-button (click)="attack()">Attack</ion-button>

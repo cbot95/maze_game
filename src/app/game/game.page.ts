@@ -17,8 +17,8 @@ export class GamePage implements OnInit {
   roomD = false;
 
   playerScore = 0;
-  playerBombs = 0;
-  enemiesLeft = 4;
+  playerArrows = 0;
+  enemiesLeft = 3;
 
   arrowA = 1;
   arrowB = 2;
@@ -29,6 +29,8 @@ export class GamePage implements OnInit {
   trollA = false;
   trollB = false;
   trollC = false;
+
+  isExit = false;
 
 
   ngOnInit() {
@@ -164,7 +166,11 @@ export class GamePage implements OnInit {
         console.log('You cannot go here');
         break;
       case 'Room D':
-        console.log('the exit');
+        if (this.isExit) {
+          console.log('Exit Reached!');
+        } else {
+          console.log('You cannot go here');
+        }
     }
     this.roomNav();
     console.log(this.currRoom);
@@ -210,7 +216,7 @@ export class GamePage implements OnInit {
         if (this.arrowA === 0){
           console.log('All bombs collected');
         } else {
-          this.playerBombs = this.playerBombs + this.arrowA;
+          this.playerArrows = this.playerArrows + this.arrowA;
           this.arrowA = 0;
         }
         break;
@@ -218,7 +224,7 @@ export class GamePage implements OnInit {
         if (this.arrowB === 0){
           console.log('There are no arrows');
         } else {
-          this.playerBombs = this.playerBombs + 1;
+          this.playerArrows = this.playerArrows + 1;
           this.arrowB = this.arrowB - 1;
         }
         break;
@@ -232,7 +238,7 @@ export class GamePage implements OnInit {
 // defeat enemy
 
   attack() {
-    if (this.playerBombs < 1 ){
+    if (this.playerArrows < 1 ){
       console.log('You have no bombs');
     } else {
       switch (this.currRoom) {
@@ -240,7 +246,7 @@ export class GamePage implements OnInit {
           if (this.trollA){
             console.log('No trolls in this room');
           } else {
-            this.playerBombs = this.playerBombs - 1;
+            this.playerArrows = this.playerArrows - 1;
             this.enemiesLeft = this.enemiesLeft - 1;
             this.trollA = true;
           }
@@ -249,7 +255,7 @@ export class GamePage implements OnInit {
           if (this.trollB){
             console.log('There are no trolls in this room');
           } else {
-            this.playerBombs = this.playerBombs - 1;
+            this.playerArrows = this.playerArrows - 1;
             this.enemiesLeft = this.enemiesLeft - 1;
             this.trollB = true;
           }
@@ -258,7 +264,7 @@ export class GamePage implements OnInit {
           if (this.trollC){
             console.log('There are no trolls in this room');
           } else {
-            this.playerBombs = this.playerBombs - 1;
+            this.playerArrows = this.playerArrows - 1;
             this.enemiesLeft = this.enemiesLeft - 1;
             this.trollC = true;
           }
