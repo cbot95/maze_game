@@ -13,4 +13,8 @@ export class HomePage {
     this.router.navigate(['/game']);
   }
 
+  howTo() {
+    this.router.navigate(['/how-to']);
+  }
+
 }
