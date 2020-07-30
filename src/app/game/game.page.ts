@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-game',
@@ -7,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class GamePage implements OnInit {
 
-  constructor() { }
+  constructor(public toastController: ToastController) { }
 
   currRoom;
   roomList = ['Room A', 'Room B', 'Room C', 'Room D'];
@@ -68,20 +69,20 @@ export class GamePage implements OnInit {
           console.log('A troll blocks the other side');
           this.playerScore = this.playerScore - 10;
         } else {
-          console.log('you have moved to room A');
           this.currRoom = 'Room A';
           this.roomB = false;
+          this.newRoom();
         }
         break;
       case 'Room C':
-        console.log('you have moved to room D');
         this.currRoom = 'Room D';
         this.roomC = false;
+        this.newRoom();
         break;
       case 'Room D':
-        console.log('you have moved to room A');
         this.currRoom = 'Room A';
         this.roomD = false;
+        this.newRoom();
     }
     this.roomNav();
     console.log(this.currRoom);
@@ -92,7 +93,7 @@ export class GamePage implements OnInit {
       case 'Room A':
         this.currRoom = 'Room D';
         this.roomA = false;
-        console.log('you have moved to room D');
+        this.newRoom();
         break;
       case 'Room B':
         if (!this.trollB) {
@@ -102,18 +103,18 @@ export class GamePage implements OnInit {
           console.log('A troll is in the other room');
           this.playerScore = this.playerScore - 10;
         } else {
-          console.log('you have moved to room C');
           this.currRoom = 'Room C';
           this.roomB = false;
+          this.newRoom();
         }
         break;
       case 'Room C':
         console.log('You cannot go here');
         break;
       case 'Room D':
-        console.log('you have moved to room C');
         this.currRoom = 'Room C';
         this.roomD = false;
+        this.newRoom();
     }
     this.roomNav();
   }
@@ -127,7 +128,7 @@ export class GamePage implements OnInit {
         } else {
           this.currRoom = 'Room B';
           this.roomA = false;
-          console.log('you have moved to room B');
+          this.newRoom();
         }
         break;
       case 'Room B':
@@ -140,13 +141,13 @@ export class GamePage implements OnInit {
         } else {
           this.currRoom = 'Room B';
           this.roomC = false;
-          console.log('you have moved to room B');
+          this.newRoom();
         }
         break;
       case 'Room D':
-        console.log('you have moved to room B');
         this.currRoom = 'Room B';
         this.roomD = false;
+        this.newRoom();
     }
     this.roomNav();
     console.log(this.currRoom);
@@ -158,15 +159,16 @@ export class GamePage implements OnInit {
         console.log('You cannot go here');
         break;
       case 'Room B':
-        console.log('you have moved to room D');
         this.currRoom = 'Room D';
         this.roomB = false;
+        this.newRoom();
         break;
       case 'Room C':
         console.log('You cannot go here');
         break;
       case 'Room D':
-        if (this.isExit) {
+        if (!this.enemiesLeft) {
+          this.isExit = true;
           console.log('Exit Reached!');
         } else {
           console.log('You cannot go here');
@@ -274,6 +276,15 @@ export class GamePage implements OnInit {
       }
     }
 
+  }
+
+  async newRoom() {
+    const toast = await this.toastController.create({
+      message: `You are now in '${this.currRoom}'`,
+      position: 'top',
+      duration: 1000
+    });
+    toast.present();
   }
 
 }
