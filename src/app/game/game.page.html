@@ -1,68 +1,50 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>game</ion-title>
-    <ion-text>Trolls: {{enemiesLeft}} </ion-text>
-    <ion-text> Score: {{playerScore}}</ion-text>
-    <ion-text> Arrows: {{playerArrows}}</ion-text>
+    <ion-buttons>
+      <ion-back-button defaultHref="home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Maze</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-
+  
   <ion-row class="ion-justify-content-center">
-    <ion-col size="12" size-lg="9">
-
-      <ion-card *ngIf="roomA">
+    <ion-col size="12" size-lg="6">
+      
+      <ion-card class="game-card">
         <ion-card-header>
-          <ion-title>Room A</ion-title>
+          <ion-title *ngIf="roomA">Room A</ion-title>
+          <ion-title *ngIf="roomB">Room B</ion-title>
+          <ion-title *ngIf="roomC">Room C</ion-title>
+          <ion-title *ngIf="roomD">Room D</ion-title>
         </ion-card-header>
-        <ion-card-content>
-          <ion-text>
+        <ion-card-content class="ion-text-center">
+          <ion-card-subtitle >Trolls {{enemiesLeft}}  Score: {{playerScore}}  Arrows: {{playerArrows}} </ion-card-subtitle>
+          <br>
+          <ion-text *ngIf="roomA">
             <p *ngIf="!trollA">There is a troll in this room! Be carefull!</p>
             <p *ngIf="arrowA > 0">There is {{arrowA}} arrow in this room</p>
             <p *ngIf="trollA && !arrowA">This room is empty, keep going!</p>
             <p *ngIf="!enemiesLeft">Find the Exit!</p>
           </ion-text>
-        </ion-card-content>
-      </ion-card>
 
-      <ion-card *ngIf="roomB">
-        <ion-card-header>
-          <ion-title>Room B</ion-title>
-        </ion-card-header>
-        <ion-card-content>
-          <ion-text>
+          <ion-text *ngIf="roomB">
             <p *ngIf="!trollB">There is a troll in this room!</p>
             <p *ngIf="arrowB > 0">There is {{arrowB}} arrow in this room</p>
             <p *ngIf="coinB">There is a silver coin</p>
             <p *ngIf="trollB && !arrowB && !coinB">This room is empty, keep going!</p>
             <p *ngIf="!enemiesLeft">Find the Exit!</p>
           </ion-text>
-        </ion-card-content>
-      </ion-card>
 
-      <ion-card *ngIf="roomC">
-        <ion-card-header>
-          <ion-title>Room C</ion-title>
-        </ion-card-header>
-        <ion-card-content>
-          <ion-text>
-            <ion-text>
-              <p *ngIf="!trollC">There is a troll in this room!</p>
-              <p *ngIf="coinC">There is a Gold coin</p>
-              <p *ngIf="trollC && !coinC">This room is empty, keep going!</p>
-              <p *ngIf="!enemiesLeft">Find the Exit!</p>
-            </ion-text>
+          <ion-text *ngIf="roomC">
+            <p *ngIf="!trollC">There is a troll in this room!</p>
+            <p *ngIf="coinC">There is a Gold coin</p>
+            <p *ngIf="trollC && !coinC">This room is empty, keep going!</p>
+            <p *ngIf="!enemiesLeft">Find the Exit!</p>
           </ion-text>
-        </ion-card-content>
-      </ion-card>
 
-      <ion-card *ngIf="roomD">
-        <ion-card-header>
-          <ion-title>Room D</ion-title>
-        </ion-card-header>
-        <ion-card-content>
-          <ion-text>
+          <ion-text *ngIf="roomD">
             <p *ngIf="coinD">There is a Silver coin</p>
             <p *ngIf="!coinD">This room is empty, keep going!</p>
             <p *ngIf="!enemiesLeft">Find the Exit!</p>
