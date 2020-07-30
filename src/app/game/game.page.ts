@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ToastController } from '@ionic/angular';
+import { AlertController } from '@ionic/angular';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-game',
@@ -8,7 +10,7 @@ import { ToastController } from '@ionic/angular';
 })
 export class GamePage implements OnInit {
 
-  constructor(public toastController: ToastController) { }
+  constructor(public toastController: ToastController, public alertController: AlertController, private router: Router) { }
 
   currRoom;
   roomList = ['Room A', 'Room B', 'Room C', 'Room D'];
@@ -37,6 +39,55 @@ export class GamePage implements OnInit {
   ngOnInit() {
    this.currRoom = (this.roomList[Math.floor(Math.random() * this.roomList.length)]);
    this.roomNav();
+  }
+
+  async gameEnd(){
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'Exit Reached',
+      message: `You have exited the maze! Score: '${this.playerScore}'`,
+      buttons: [
+        {
+          text: 'Play again?',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => {
+            this.gameReset();
+          }
+        }, {
+          text: 'Back to home',
+          handler: () => {
+            this.router.navigate(['./home']);
+          }
+        }
+      ]
+    });
+    await alert.present();
+  }
+
+  gameReset() {
+    this.roomA = false;
+    this.roomB = false;
+    this.roomC = false;
+    this.roomD = false;
+    this.currRoom = (this.roomList[Math.floor(Math.random() * this.roomList.length)]);
+    this.roomNav();
+    this.playerScore = 0;
+    this.playerArrows = 0;
+    this.enemiesLeft = 3;
+
+    this.arrowA = 1;
+    this.arrowB = 2;
+    this.coinB = 50;
+    this.coinC = 100;
+    this.coinD = 50;
+
+    this.trollA = false;
+    this.trollB = false;
+    this.trollC = false;
+
+    this.isExit = false;
+
   }
 
   roomNav() {
@@ -168,6 +219,7 @@ export class GamePage implements OnInit {
         if (!this.enemiesLeft) {
           this.isExit = true;
           console.log('Exit Reached!');
+          this.gameEnd();
         } else {
           this.noPsg();
         }
@@ -252,6 +304,7 @@ export class GamePage implements OnInit {
             this.playerArrows = this.playerArrows - 1;
             this.enemiesLeft = this.enemiesLeft - 1;
             this.trollA = true;
+            this.trollDefeat();
           }
           break;
         case 'Room B':
@@ -261,6 +314,7 @@ export class GamePage implements OnInit {
             this.playerArrows = this.playerArrows - 1;
             this.enemiesLeft = this.enemiesLeft - 1;
             this.trollB = true;
+            this.trollDefeat();
           }
           break;
         case 'Room C':
@@ -270,6 +324,7 @@ export class GamePage implements OnInit {
             this.playerArrows = this.playerArrows - 1;
             this.enemiesLeft = this.enemiesLeft - 1;
             this.trollC = true;
+            this.trollDefeat();
           }
           break;
           case 'Room D':
@@ -365,12 +420,22 @@ export class GamePage implements OnInit {
 
   async noTrolls() {
     const toast = await this.toastController.create({
-      message: `You Have no arrows!`,
+      message: `There are no trolls here`,
       position: 'top',
       duration: 1000
     });
     toast.present();
   }
+
+  async trollDefeat() {
+    const toast = await this.toastController.create({
+      message: `Troll defeated`,
+      position: 'top',
+      duration: 1000
+    });
+    toast.present();
+  }
+
 
 
 }
