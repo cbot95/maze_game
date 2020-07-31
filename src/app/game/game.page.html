@@ -20,7 +20,7 @@
           <ion-title *ngIf="roomD">Room D</ion-title>
         </ion-card-header>
         <ion-card-content class="ion-text-center">
-          <ion-card-subtitle >Trolls {{enemiesLeft}}  Score: {{playerScore}}  Arrows: {{playerArrows}} </ion-card-subtitle>
+          <ion-card-subtitle >Trolls: {{enemiesLeft}}  Score: {{playerScore}}  Arrows: {{playerArrows}} </ion-card-subtitle>
           <br>
           <ion-text *ngIf="roomA">
             <p *ngIf="!trollA">There is a troll in this room! Be carefull!</p>
@@ -31,8 +31,9 @@
 
           <ion-text *ngIf="roomB">
             <p *ngIf="!trollB">There is a troll in this room!</p>
-            <p *ngIf="arrowB > 0">There is {{arrowB}} arrow in this room</p>
-            <p *ngIf="coinB">There is a silver coin</p>
+            <p *ngIf="arrowB === 1">There is {{arrowB}} arrow in this room</p>
+            <p *ngIf="arrowB === 2">There are {{arrowB}} arrows in this room</p>
+            <p *ngIf="coinB">There is a Silver coin</p>
             <p *ngIf="trollB && !arrowB && !coinB">This room is empty, keep going!</p>
             <p *ngIf="!enemiesLeft">Find the Exit!</p>
           </ion-text>

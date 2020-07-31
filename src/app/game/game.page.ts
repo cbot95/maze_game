@@ -411,7 +411,7 @@ export class GamePage implements OnInit {
 
   async noArrows() {
     const toast = await this.toastController.create({
-      message: `You Have no arrows!`,
+      message: `You have no arrows!`,
       position: 'top',
       duration: 1000
     });
